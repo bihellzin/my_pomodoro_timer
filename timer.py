@@ -1,7 +1,12 @@
 #!/usr/bin/python3
 
+import time
 import getopt
 import sys
 
-print ('Number of arguments:', len(sys.argv), 'arguments.')
-print ('Argument List:', str(sys.argv))
+def main():
+    pass
+
+if __name__ == "__main__":
+    main()
+    print('rodou')
