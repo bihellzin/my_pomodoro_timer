@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+import getopt
 import sys
 
 print ('Number of arguments:', len(sys.argv), 'arguments.')
