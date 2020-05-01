@@ -4,6 +4,7 @@
 import time
 import sys
 import os
+from playsound import playsound
 
 
 def main(concentration: int = 25, short_break: int = 5,
@@ -20,25 +21,18 @@ def main(concentration: int = 25, short_break: int = 5,
             if j == concentrations_before_long_break - 1:
                 break
 
+            play_alarm('relax.mp3')
             print_minutes(short_break, 'SHORT BREAK')
+            play_alarm('back_to_study.mp3')
 
         if i == total_cycles - 1:
-            total_concentration = concentration * \
-                (total_cycles * concentrations_before_long_break)
-
-            total_minutes = total_concentration + (long_break * (total_cycles - 1) + short_break
-                                                   * ((concentrations_before_long_break - 1) *
-                                                      total_cycles))
-
-            final_output = 'The whole cycle is over.\n' \
-                           'You\'ve had {} minutes of concentration\n' \
-                           'The whole cycle took {} minutes to finish'.format(
-                               total_concentration, total_minutes)
-
             clear_terminal()
-            sys.stdout.write(final_output)
+            sys.stdout.write(final_output(concentration, short_break,
+                                          concentrations_before_long_break, long_break,
+                                          total_cycles))
 
         else:
+            play_alarm('relax.mp3')
             print_minutes(long_break, 'LONG BREAK')
 
 
@@ -77,6 +71,22 @@ def print_minutes(minutes: int, type_of_minute: str):
             time.sleep(1)
 
 
+def final_output(concentration: int, short_break: int, concentrations_before_long_break: int,
+                 long_break: int, total_cycles: int):
+    """
+    This function will print a message when the cycle finishes
+    """
+    total_concentration = concentration * (total_cycles * concentrations_before_long_break)
+
+    total_minutes = total_concentration + (long_break * (total_cycles - 1) + short_break \
+                    * ((concentrations_before_long_break - 1) * total_cycles))
+
+    output = 'The whole cycle is over.\n' \
+    'You\'ve had {} minutes of concentration\n' \
+    'The whole cycle took {} minutes to finish'.format(total_concentration, total_minutes)
+
+    return output
+
 
 def clear_terminal():
     """
@@ -84,6 +94,12 @@ def clear_terminal():
     """
     os.system('cls' if os.name == 'nt' else 'clear')  # clear the terminal
 
+
+def play_alarm(file: str):
+    """
+    This function plays the mp3 file named alarm.mp3
+    """
+    playsound(file)
 
 
 if __name__ == "__main__":
