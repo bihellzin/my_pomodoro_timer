@@ -5,41 +5,40 @@ import time
 import sys
 
 
-def main(minutes_of_concentration: int = 25, minutes_of_short_break: int = 5,
-         number_of_concentration_before_long_break: int = 4,
-         minutes_of_long_break: int = 30, total_number_of_cycles: int = 2):
+def main(concentration: int = 25, short_break: int = 5,
+         concentrations_before_long_break: int = 4,
+         long_break: int = 30, total_cycles: int = 2):
     '''
     The main function of the app
     '''
 
-    for i in range(total_number_of_cycles):
-        for j in range(number_of_concentration_before_long_break):
-            print_minutes(minutes_of_concentration, 'CONCENTRATION TIME')
+    for i in range(total_cycles):
+        for j in range(concentrations_before_long_break):
+            print_minutes(concentration, 'CONCENTRATION TIME')
 
-            if j == number_of_concentration_before_long_break - 1:
+            if j == concentrations_before_long_break - 1:
                 break
 
-            print_minutes(minutes_of_short_break, 'SHORT BREAK')
+            print_minutes(short_break, 'SHORT BREAK')
 
-        if i == total_number_of_cycles - 1:
-            total_minutes_of_concentration = minutes_of_concentration * \
-            (total_number_of_cycles * number_of_concentration_before_long_break)
+        if i == total_cycles - 1:
+            total_concentration = concentration * \
+            (total_cycles * concentrations_before_long_break)
 
-            total_minutes = total_minutes_of_concentration + (
-                minutes_of_long_break * (total_number_of_cycles - 1) +
-                minutes_of_short_break * ((number_of_concentration_before_long_break - 1) *
-                                          total_number_of_cycles))
+            total_minutes = total_concentration + (
+                long_break * (total_cycles - 1) +
+                short_break * ((concentrations_before_long_break - 1) * total_cycles))
 
             final_output = 'The whole cycle is over.\n' \
                            'You\'ve had {} minutes of concentration\n' \
                            'The whole cycle took {} minutes to finish'.format(
-                               total_minutes_of_concentration, total_minutes)
+                               total_concentration, total_minutes)
 
             clear_lines(2)
             sys.stdout.write(final_output)
 
         else:
-            print_minutes(minutes_of_long_break, 'LONG BREAK')
+            print_minutes(long_break, 'LONG BREAK')
 
 
 def print_manual():
@@ -47,7 +46,7 @@ def print_manual():
     If the user puts an incorrect argument or if he calls the \"help\" command
     this function will be called
     """
-    return
+    print('blablabla')
 
 
 def print_minutes(minutes: int, type_of_minute: str):
@@ -78,7 +77,7 @@ def clear_lines(lines):
     """
     This function clear the lines of the terminal
     """
-    sys.stdout.write('\033[F\033[K' * lines) # 1 is the number of lines that will be overwriten
+    sys.stdout.write('\033[F\033[K' * lines) # lines is the number of lines that will be overwriten
     sys.stdout.flush()
 
 
@@ -94,5 +93,5 @@ if __name__ == "__main__":
              NUMBER_OF_CONCENTRATIONS_BEFORE_LONG_BREAK, MINUTES_OF_LONG_BREAK,
              TOTAL_NUMBER_OF_CYCLES)
 
-    except Exception as e:
-        raise
+    except ValueError:
+        print_manual()
