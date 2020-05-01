@@ -34,6 +34,7 @@ def main(concentration: int = 25, short_break: int = 5,
         else:
             play_alarm('relax.mp3')
             print_minutes(long_break, 'LONG BREAK')
+            play_alarm('back_to_study.mp3')
 
 
 def print_manual():
