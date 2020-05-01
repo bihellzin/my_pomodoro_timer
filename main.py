@@ -13,8 +13,6 @@ def main(concentration: int = 25, short_break: int = 5,
     The main function of the app
     '''
 
-    os.system('cls' if os.name == 'nt' else 'clear')  # clear the terminal
-
     for i in range(total_cycles):
         for j in range(concentrations_before_long_break):
             print_minutes(concentration, 'CONCENTRATION TIME')
@@ -28,16 +26,16 @@ def main(concentration: int = 25, short_break: int = 5,
             total_concentration = concentration * \
                 (total_cycles * concentrations_before_long_break)
 
-            total_minutes = total_concentration + (
-                long_break * (total_cycles - 1) +
-                short_break * ((concentrations_before_long_break - 1) * total_cycles))
+            total_minutes = total_concentration + (long_break * (total_cycles - 1) + short_break
+                                                   * ((concentrations_before_long_break - 1) *
+                                                      total_cycles))
 
             final_output = 'The whole cycle is over.\n' \
                            'You\'ve had {} minutes of concentration\n' \
                            'The whole cycle took {} minutes to finish'.format(
                                total_concentration, total_minutes)
 
-            clear_lines(2)
+            clear_terminal()
             sys.stdout.write(final_output)
 
         else:
@@ -49,6 +47,7 @@ def print_manual():
     If the user puts an incorrect argument or if he calls the \"help\" command
     this function will be called
     """
+
     print('blablabla')
 
 
@@ -58,12 +57,12 @@ def print_minutes(minutes: int, type_of_minute: str):
     """
 
     for i in range(minutes, 0, -1):
-        clear_lines(1)
+        clear_terminal()
         string_minutes = str(i - 1)
         sys.stdout.write(type_of_minute + '\n' + str(minutes) + ':00')
 
         for j in range(59, -1, -1):
-            clear_lines(1)
+            clear_terminal()
             string_seconds = str(j)
 
             if len(string_seconds) == 1:
@@ -71,18 +70,20 @@ def print_minutes(minutes: int, type_of_minute: str):
                                  string_seconds)
 
             else:
-                sys.stdout.write(type_of_minute + '\n' + string_minutes + ':' + string_seconds)
+                sys.stdout.write(type_of_minute + '\n' +
+                                 string_minutes + ':' + string_seconds)
 
             sys.stdout.flush()
             time.sleep(1)
 
 
-def clear_lines(lines: int):
+
+def clear_terminal():
     """
-    This function clear the lines of the terminal
+    This function clears the terminal
     """
-    sys.stdout.write('\033[F\033[K' * lines) #'lines' is the number of lines that will be overwriten
-    sys.stdout.flush()
+    os.system('cls' if os.name == 'nt' else 'clear')  # clear the terminal
+
 
 
 if __name__ == "__main__":
