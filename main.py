@@ -77,11 +77,11 @@ def print_minutes(minutes: int, type_of_minute: str):
             time.sleep(1)
 
 
-def clear_lines(lines):
+def clear_lines(lines: int):
     """
     This function clear the lines of the terminal
     """
-    sys.stdout.write('\033[F\033[K' * lines)  # lines is the number of lines that will be overwriten
+    sys.stdout.write('\033[F\033[K' * lines) #'lines' is the number of lines that will be overwriten
     sys.stdout.flush()
 
 
