@@ -3,6 +3,7 @@
 
 import time
 import sys
+import os
 
 
 def main(concentration: int = 25, short_break: int = 5,
@@ -11,6 +12,8 @@ def main(concentration: int = 25, short_break: int = 5,
     '''
     The main function of the app
     '''
+
+    os.system('cls' if os.name == 'nt' else 'clear')  # clear the terminal
 
     for i in range(total_cycles):
         for j in range(concentrations_before_long_break):
@@ -23,7 +26,7 @@ def main(concentration: int = 25, short_break: int = 5,
 
         if i == total_cycles - 1:
             total_concentration = concentration * \
-            (total_cycles * concentrations_before_long_break)
+                (total_cycles * concentrations_before_long_break)
 
             total_minutes = total_concentration + (
                 long_break * (total_cycles - 1) +
@@ -64,7 +67,8 @@ def print_minutes(minutes: int, type_of_minute: str):
             string_seconds = str(j)
 
             if len(string_seconds) == 1:
-                sys.stdout.write(type_of_minute + '\n' + string_minutes + ':' + '0' +string_seconds)
+                sys.stdout.write(type_of_minute + '\n' + string_minutes + ':' + '0' +
+                                 string_seconds)
 
             else:
                 sys.stdout.write(type_of_minute + '\n' + string_minutes + ':' + string_seconds)
@@ -77,21 +81,25 @@ def clear_lines(lines):
     """
     This function clear the lines of the terminal
     """
-    sys.stdout.write('\033[F\033[K' * lines) # lines is the number of lines that will be overwriten
+    sys.stdout.write('\033[F\033[K' * lines)  # lines is the number of lines that will be overwriten
     sys.stdout.flush()
 
 
 if __name__ == "__main__":
     try:
-        MINUTES_OF_CONCENTRARION = int(sys.argv[1])
-        MINUTES_OF_SHORT_BREAK = int(sys.argv[2])
-        NUMBER_OF_CONCENTRATIONS_BEFORE_LONG_BREAK = int(sys.argv[3])
-        MINUTES_OF_LONG_BREAK = int(sys.argv[4])
-        TOTAL_NUMBER_OF_CYCLES = int(sys.argv[5])
+        if len(sys.argv) == 1:
+            main()
 
-        main(MINUTES_OF_CONCENTRARION, MINUTES_OF_SHORT_BREAK,
-             NUMBER_OF_CONCENTRATIONS_BEFORE_LONG_BREAK, MINUTES_OF_LONG_BREAK,
-             TOTAL_NUMBER_OF_CYCLES)
+        else:
+            MINUTES_OF_CONCENTRARION = int(sys.argv[1])
+            MINUTES_OF_SHORT_BREAK = int(sys.argv[2])
+            NUMBER_OF_CONCENTRATIONS_BEFORE_LONG_BREAK = int(sys.argv[3])
+            MINUTES_OF_LONG_BREAK = int(sys.argv[4])
+            TOTAL_NUMBER_OF_CYCLES = int(sys.argv[5])
 
-    except ValueError:
+            main(MINUTES_OF_CONCENTRARION, MINUTES_OF_SHORT_BREAK,
+                 NUMBER_OF_CONCENTRATIONS_BEFORE_LONG_BREAK, MINUTES_OF_LONG_BREAK,
+                 TOTAL_NUMBER_OF_CYCLES)
+
+    except (ValueError, IndexError):
         print_manual()
